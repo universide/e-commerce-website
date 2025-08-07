@@ -189,3 +189,79 @@ form button {
     border-radius: 4px;
     text-decoration: none;
 }
+
+/* Container for authentication pages (login, register, forgot password) */
+.auth-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+    margin: 3rem auto;
+    padding: 2rem;
+}
+.auth-container h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+.auth-container form label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+.auth-container form input[type="text"],
+.auth-container form input[type="password"],
+.auth-container form input[type="email"] {
+    width: 100%;
+    padding: 0.6rem;
+    margin-top: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.auth-container form button {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    margin-top: 1rem;
+    background-color: #2a5d8f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+/* Password requirements list */
+.auth-container .password-requirements {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 0.5rem 0 1rem;
+}
+.auth-container .password-requirements ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+.auth-container .password-requirements li {
+    margin-bottom: 0.3rem;
+}
+/* Message styles */
+.auth-container .message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+/* Options row (remember me / links) */
+.auth-container .options {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+.auth-container .options a {
+    color: #2a5d8f;
+    text-decoration: none;
+}
+.auth-container .options a:hover {
+    text-decoration: underline;
+}

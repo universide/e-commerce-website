@@ -1,19 +1,39 @@
 {% extends 'layout.html' %}
-
 {% block title %}Register - My Store{% endblock %}
-
 {% block content %}
-<h2>Register</h2>
-<form method="post">
-  <label for="username">Username:
-    <input type="text" id="username" name="username" required>
-  </label>
-  <label for="password">Password:
-    <input type="password" id="password" name="password" required>
-  </label>
-  <button type="submit">Register</button>
-</form>
-{% for message in get_flashed_messages() %}
-<p style="color: red;">{{ message }}</p>
-{% endfor %}
+<div class="auth-container">
+  <h2>Create an Account</h2>
+  <form method="post" novalidate>
+    <label for="username">Username:
+      <input type="text" id="username" name="username" autocomplete="username" required>
+    </label>
+    <label for="password">Password:
+      <input type="password" id="password" name="password"
+             pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}"
+             title="At least 8 characters including uppercase, lowercase, numeric and special characters"
+             autocomplete="new-password" required>
+    </label>
+    <div class="password-requirements">
+      <p>Your password must contain at least:</p>
+      <ul>
+        <li>8 characters</li>
+        <li>1 lowercase letter</li>
+        <li>1 uppercase letter</li>
+        <li>1 number</li>
+        <li>1 special character</li>
+      </ul>
+    </div>
+    <button type="submit">Register</button>
+  </form>
+  {% if get_flashed_messages() %}
+  <div class="message">
+    {% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <div class="options">
+    <span>Already have an account? <a href="{{ url_for('login') }}">Login</a></span>
+  </div>
+</div>
 {% endblock %}
