@@ -3,22 +3,36 @@
 {% block title %}Products - My Store{% endblock %}
 
 {% block content %}
-<h2>Available Products</h2>
-<div class="product-grid">
-  {% for product in products %}
-    <div class="product">
-      {% if product.image %}
-        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
-      {% endif %}
-      <div class="info">
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description }}</p>
-        <div class="price">${{ '%.2f'|format(product.price_as_decimal()) }}</div>
-        <div class="actions">
-          <a href="{{ url_for('add_to_cart', product_id=product.id) }}">Add to Cart</a>
+  <!-- Hero 区 -->
+  <section class="hero">
+    <h2>Welcome to My Online Store</h2>
+    <p>Shop the latest gadgets and accessories at great prices!</p>
+    {% if session.get('user_id') %}
+      <a href="{{ url_for('view_cart') }}" class="btn">View Cart</a>
+    {% else %}
+      <a href="{{ url_for('register') }}" class="btn">Get Started</a>
+    {% endif %}
+  </section>
+
+  <!-- 产品列表 -->
+  <div class="container">
+    <h2>Available Products</h2>
+    <div class="product-grid">
+      {% for product in products %}
+        <div class="product">
+          {% if product.image %}
+            <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+          {% endif %}
+          <div class="info">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <div class="price">${{ '%.2f'|format(product.price_as_decimal()) }}</div>
+            <div class="actions">
+              <a href="{{ url_for('add_to_cart', product_id=product.id) }}">Add to Cart</a>
+            </div>
+          </div>
         </div>
-      </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-</div>
+  </div>
 {% endblock %}
