@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Store{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}My Store{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="{{ url_for('index') }}" style="color: #fff; text-decoration: none;">My Online Store</a></h1>
-            <nav>
-                <a href="{{ url_for('index') }}">Home</a>
-                <a href="{{ url_for('view_cart') }}">Cart ({{ session['cart']|length }})</a>
-            </nav>
+  <header>
+    <div class="container">
+      <h1><a href="{{ url_for('index') }}" style="color: #fff; text-decoration: none;">My Online Store</a></h1>
+      <nav class="main-nav">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('view_cart') }}">Cart ({{ session['cart']|length }})</a>
+        <div class="nav-right">
+          {% if session.get('user_id') %}
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+          {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+          {% endif %}
         </div>
-    </header>
-    <main class="container">
-        {% block content %}{% endblock %}
-    </main>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
 </body>
 </html>

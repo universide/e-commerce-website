@@ -6,24 +6,24 @@
 <h2>Order Summary</h2>
 {% if items %}
 <table class="cart-table">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in items %}
-        <tr>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>${{ '%.2f'|format(item.product.price_as_decimal) }}</td>
-            <td>${{ '%.2f'|format(item.line_total) }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>${{ '%.2f'|format(item.product.price_as_decimal()) }}</td>
+      <td>${{ '%.2f'|format(item.line_total) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 <div class="total">Grand Total: ${{ '%.2f'|format(total) }}</div>
 <p>Thank you for your order! In a real application this is where we would process your payment and gather shipping information.</p>

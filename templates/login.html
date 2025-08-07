@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block title %}Login - My Store{% endblock %}
+
+{% block content %}
+<h2>Login</h2>
+<form method="post">
+  <label for="username">Username:
+    <input type="text" id="username" name="username" required>
+  </label>
+  <label for="password">Password:
+    <input type="password" id="password" name="password" required>
+  </label>
+  <button type="submit">Login</button>
+</form>
+{% for message in get_flashed_messages() %}
+<p style="color: red;">{{ message }}</p>
+{% endfor %}
+{% endblock %}
