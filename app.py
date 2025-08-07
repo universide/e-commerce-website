@@ -1,12 +1,12 @@
-"""Simple E‑commerce web application.
+"""Simple E-commerce web application.
 
 This module defines a minimal Flask application that implements the core
 functionality of a small online store.  Users can browse a catalogue of
-products, add items to a session‑based shopping cart, view the cart and
+products, add items to a session-based shopping cart, view the cart and
 proceed to a checkout summary.  For clarity and brevity the example omits
 many production concerns such as authentication, payment integration,
 security hardening and input validation.  You can build on this scaffold
-to implement a full‑featured online shop.
+to implement a full-featured online shop.
 
 Usage:
     python app.py
@@ -31,45 +31,20 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 
 
-# Create the Flask app and configure it.  For simplicity we're using a
-# SQLite database stored in a local file.  In a production system you
-# should consider using a more robust database (e.g. PostgreSQL) and
-# storing credentials securely.
+# Create the Flask app and configure it.
 app = Flask(__name__)
-# A secret key is required for session handling.  In production set this
-# via an environment variable or configuration file, never commit real
-# secrets to version control.
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'dev-secret')
 
-# Configure the SQLite database.  It will be created automatically if it
-# doesn't exist.
+# Configure the SQLite database.
 database_path = os.path.join(os.path.dirname(__file__), 'store.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{database_path}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Initialize the SQLAlchemy extension
 db = SQLAlchemy(app)
 
 
 class Product(db.Model):
-    """Database model representing a product available for sale.
-
-    Attributes
-    ----------
-    id: int
-        Primary key identifier for the product.
-    name: str
-        The human‑readable name of the product.
-    price: int
-        Price in cents to avoid floating point errors when dealing with money.
-    description: str
-        A brief textual description of the product.
-    image: str
-        Path to an image representing the product.  This example stores
-        filenames relative to the ``static`` directory.  In a real
-        application you might store URLs or integrate with a CDN.
-    """
-
+    """Database model representing a product available for sale."""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer, nullable=False)
@@ -77,18 +52,11 @@ class Product(db.Model):
     image = db.Column(db.String(255), nullable=True)
 
     def price_as_decimal(self) -> Decimal:
-        """Return price as a Decimal expressed in dollars instead of cents."""
         return Decimal(self.price) / 100
 
 
 def seed_data() -> None:
-    """Populate the database with some sample products if it's empty.
-
-    This function checks whether any products exist in the database and, if
-    none do, inserts a handful of example items.  Running this on each
-    start allows the application to function out of the box without
-    manual database preparation.
-    """
+    """Populate the database with some sample products if it's empty."""
     if Product.query.first() is None:
         sample_products = [
             Product(
@@ -104,15 +72,15 @@ def seed_data() -> None:
                 image='keyboard.jpg',
             ),
             Product(
-                name='USB‑C Charger',
+                name='USB-C Charger',
                 price=1999,
-                description='Fast‑charging USB‑C power adapter for phones and laptops.',
+                description='Fast-charging USB-C power adapter for phones and laptops.',
                 image='charger.jpg',
             ),
             Product(
                 name='Noise Cancelling Headphones',
                 price=12999,
-                description='Over‑ear headphones with active noise cancellation.',
+                description='Over-ear headphones with active noise cancellation.',
                 image='headphones.jpg',
             ),
         ]
@@ -122,13 +90,7 @@ def seed_data() -> None:
 
 @app.before_request
 def ensure_cart_exists() -> None:
-    """Ensure the user session has a cart structure.
-
-    The cart is stored in the session as a dictionary mapping product IDs
-    (as strings) to quantity integers.  Flask stores the session on the
-    client as a signed cookie, so you should keep the stored data small
-    and avoid sensitive information.
-    """
+    """Ensure the user session has a cart structure."""
     if 'cart' not in session:
         session['cart'] = {}
 
@@ -142,12 +104,7 @@ def index() -> str:
 
 @app.route('/add_to_cart/<int:product_id>')
 def add_to_cart(product_id: int) -> Any:
-    """Add a product to the shopping cart.
-
-    Increments the quantity of the given product in the cart stored in
-    the session.  If the product ID is not recognised, the user is
-    redirected back to the home page.
-    """
+    """Add a product to the shopping cart."""
     product = Product.query.get(product_id)
     if not product:
         return redirect(url_for('index'))
@@ -193,12 +150,7 @@ def remove_from_cart(product_id: int) -> Any:
 
 @app.route('/checkout')
 def checkout() -> str:
-    """Display a summary of the order.
-
-    In a complete implementation this is where you would collect shipping
-    details and integrate with a payment gateway.  Here we simply show
-    the final total and clear the cart after checkout.
-    """
+    """Display a summary of the order."""
     cart: Dict[str, int] = session.get('cart', {})
     items = []
     total_cents = 0
@@ -213,16 +165,15 @@ def checkout() -> str:
                 'line_total': Decimal(line_total) / 100
             })
     total = Decimal(total_cents) / 100
-    # After checkout we clear the cart.  In a real application you would
-    # persist the order and only clear the cart after successful payment.
+    # Clear the cart after checkout
     session['cart'] = {}
     return render_template('checkout.html', items=items, total=total)
 
 
 if __name__ == '__main__':
-    # Create the database tables if they don't exist
+    # Create tables and seed data
     with app.app_context():
         db.create_all()
         seed_data()
-    # Run the application in debug mode for development convenience
-    app.run(debug=True)
+    # Run the dev server
+    app.run(debug=True, host="127.0.0.1", port=5000)
