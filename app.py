@@ -18,6 +18,9 @@ running the script.
 from __future__ import annotations
 
 import os
+print(">>> DEBUG: executing file:", os.path.abspath(__file__))
+print(">>> DEBUG: loading app.py") 
+print(">>> DEBUG: executing file:", __file__)
 from decimal import Decimal
 from typing import Dict, Any
 
@@ -29,6 +32,8 @@ from flask import (
     session,
 )
 from flask_sqlalchemy import SQLAlchemy
+
+
 
 
 # Create the Flask app and configure it.
@@ -169,7 +174,7 @@ def checkout() -> str:
     session['cart'] = {}
     return render_template('checkout.html', items=items, total=total)
 
-
+print(">>> DEBUG: __name__ is", __name__)
 if __name__ == '__main__':
     # Create tables and seed data
     with app.app_context():
