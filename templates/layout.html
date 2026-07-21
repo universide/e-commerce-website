@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}My Store{% endblock %}</title>
+  <title>{% block title %}Flask Commerce Demo{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <header>
     <div class="container">
-      <h1><a href="{{ url_for('index') }}" style="color: #fff; text-decoration: none;">My Online Store</a></h1>
-      <nav class="main-nav">
+      <h1><a href="{{ url_for('index') }}" style="color:#fff;text-decoration:none;">Flask Commerce Demo</a></h1>
+      <nav class="main-nav" aria-label="Primary navigation">
         <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('view_cart') }}">Cart ({{ session['cart']|length }})</a>
+        <a href="{{ url_for('view_cart') }}">Cart ({{ session.get('cart', {})|length }})</a>
         <div class="nav-right">
           {% if session.get('user_id') %}
             <a href="{{ url_for('profile') }}">Profile</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
+            <form method="post" action="{{ url_for('logout') }}" class="inline-form">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" class="nav-button">Logout</button>
+            </form>
           {% else %}
             <a href="{{ url_for('login') }}">Login</a>
             <a href="{{ url_for('register') }}">Register</a>
@@ -26,6 +29,13 @@
     </div>
   </header>
   <main class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="message" role="alert">
+          {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
   </main>
 </body>
