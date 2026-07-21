@@ -1,269 +1,177 @@
-    /*
-    * Basic stylesheet for the e-commerce application.
-    * 包括主页背景、导航栏、Hero 区、产品卡片、购物车、表单等样式。
-    */
-
-    @media (min-width: 769px) {
-    body {
-        background: url('/static/background-full.png') center center / cover no-repeat fixed;
-    }
-    }
-
-    /* 手机：竖向完整显示，用 contain 保证不裁剪 */
-    @media (max-width: 768px) {
-    body {
-        background: url('/static/background-full.png') center top / contain no-repeat scroll;
-        background-color: #f7f7f7;
-    }
+:root {
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #f4f7fb;
 }
 
+* { box-sizing: border-box; }
 
-    body {
-        margin: 0;
-        padding: 0;
-        background: url('/static/background-full.png') center center / cover no-repeat fixed;
-        background-color: #f7f7f7;  /* 后备色 */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(244, 247, 251, 0.92), rgba(244, 247, 251, 0.98)),
+    url('/static/background-full.png') center / cover fixed;
+}
 
-        font-family: Arial, sans-serif;
-        color: #333;
-    }
+a { color: #185abd; }
 
-    header {
-        background-color: #2a5d8f;
-        color: #fff;
-        padding: 1rem 2rem;
-    }
-    header .container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    header h1 {
-        margin: 0;
-        font-size: 1.8rem;
-    }
-    header nav.main-nav {
-        display: flex;
-        align-items: center;
-    }
-    header nav.main-nav a {
-        color: #fff;
-        text-decoration: none;
-        font-weight: 600;
-        margin-right: 0.5rem;
-        padding: 0.5rem 0.75rem;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-    }
-    header nav.main-nav a:hover {
-        background-color: rgba(255,255,255,0.2);
-    }
-    header nav.main-nav .nav-right {
-        margin-left: 1rem;
-        display: flex;
-        gap: 0.5rem;
-    }
+header {
+  background: #153e75;
+  color: white;
+  box-shadow: 0 2px 12px rgba(16, 37, 67, 0.18);
+}
 
-    /* Hero 区域 */
-    .hero {
-        background-image:
-        linear-gradient(rgba(42,93,143,0.3), rgba(42,93,143,0.3)),
-        url('/static/background.jpg');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        padding: 4rem 0;
-        text-align: center;
-        color: #fff;
-    }
-    .hero h2 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        font-weight: 600;
-    }
-    .hero p {
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
-    }
-    .hero .btn {
-        background-color: #fff;
-        color: #2a5d8f;
-        padding: 0.6rem 1.2rem;
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background-color 0.3s;
-    }
-    .hero .btn:hover {
-        background-color: #f0f0f0;
-    }
+.container {
+  width: min(1080px, calc(100% - 2rem));
+  margin: 0 auto;
+}
 
-    /* 容器 */
-    .container {
-        max-width: 960px;
-        margin: 2rem auto;
-        padding: 0 1rem;
-    }
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+  gap: 1rem;
+}
 
-    /* 产品列表网格 */
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 1.5rem;
-    }
+header h1 { margin: 0; font-size: 1.35rem; }
 
-    /* 单个产品卡片 */
-    .product {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        transition: transform 0.2s;
-    }
-    .product:hover {
-        transform: translateY(-4px);
-    }
-    .product img {
-        width: 100%;
-        height: 160px;
-        object-fit: cover;
-    }
-    .product .info {
-        padding: 0.5rem 1rem 1rem;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .product .info h3 {
-        margin: 0 0 0.5rem;
-        font-size: 1.1rem;
-    }
-    .product .info p {
-        margin: 0 0 0.5rem;
-        font-size: 0.9rem;
-        color: #666;
-        flex-grow: 1;
-    }
-    .product .info .price {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-    }
-    .product .info .actions {
-        text-align: center;
-    }
-    .product .info .actions a {
-        background-color: #2a5d8f;
-        color: #fff;
-        padding: 0.4rem 0.6rem;
-        border-radius: 3px;
-        text-decoration: none;
-        font-size: 0.9rem;
-        display: inline-block;
-    }
+.main-nav,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+}
 
-    /* 购物车表格 */
-    .cart-table {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: #fff;
-        border: 1px solid #ddd;
-    }
-    .cart-table th,
-    .cart-table td {
-        padding: 0.6rem 0.8rem;
-        border-bottom: 1px solid #eee;
-        text-align: left;
-    }
-    .cart-table th {
-        background-color: #f0f0f0;
-    }
-    .total {
-        text-align: right;
-        margin-top: 1rem;
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-    .checkout-button {
-        display: inline-block;
-        margin-top: 1rem;
-        padding: 0.6rem 1rem;
-        background-color: #2a5d8f;
-        color: #fff;
-        border-radius: 4px;
-        text-decoration: none;
-    }
+.main-nav a,
+.nav-button {
+  border: 0;
+  border-radius: 8px;
+  padding: .55rem .75rem;
+  color: white;
+  background: transparent;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-    /* 表单和认证页容器 */
-    .auth-container {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        max-width: 420px;
-        margin: 3rem auto;
-        padding: 2rem;
-    }
-    .auth-container h2 {
-        text-align: center;
-        margin-top: 0;
-        margin-bottom: 1.5rem;
-    }
-    .auth-container form {
-        display: flex;
-        flex-direction: column;
-    }
-    .auth-container form label {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-    }
-    .auth-container form input[type="text"],
-    .auth-container form input[type="password"],
-    .auth-container form input[type="email"] {
-        width: 100%;
-        padding: 0.6rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    .auth-container form button {
-        background-color: #2a5d8f;
-        color: #fff;
-        padding: 0.6rem;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 1rem;
-    }
-    .auth-container form button:hover {
-        background-color: #234d7a;
-    }
-    .auth-container .password-requirements {
-        font-size: 0.85rem;
-        color: #555;
-        margin-bottom: 1rem;
-    }
-    .auth-container .password-requirements ul {
-        margin: 0 0 1rem 1.2rem;
-        padding: 0;
-    }
-    .auth-container .message {
-        color: red;
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-    .auth-container .options {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.85rem;
-    }
-    .auth-container .options a {
-        color: #2a5d8f;
-        text-decoration: none;
-    }
-    .auth-container .options a:hover {
-        text-decoration: underline;
-    }
+.main-nav a:hover,
+.nav-button:hover { background: rgba(255, 255, 255, .14); }
+
+main.container { padding: 2rem 0 3rem; }
+
+.hero {
+  margin-bottom: 2rem;
+  padding: clamp(2rem, 7vw, 4rem);
+  border-radius: 20px;
+  background:
+    linear-gradient(120deg, rgba(16, 57, 105, .93), rgba(25, 112, 164, .82)),
+    url('/static/background.jpg') center / cover;
+  box-shadow: 0 20px 50px rgba(23, 54, 88, .18);
+  color: white;
+}
+
+.hero h2 { margin: 0 0 .65rem; font-size: clamp(2rem, 5vw, 3.25rem); }
+.hero p { max-width: 680px; margin: 0 0 1.4rem; font-size: 1.08rem; }
+
+.btn,
+button,
+.checkout-button {
+  display: inline-block;
+  border: 0;
+  border-radius: 9px;
+  padding: .7rem 1rem;
+  background: #1967d2;
+  color: white;
+  font: inherit;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn { background: white; color: #153e75; }
+button:hover,
+.checkout-button:hover { filter: brightness(.94); }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+  gap: 1.25rem;
+}
+
+.product,
+.auth-container,
+.cart-table {
+  background: rgba(255, 255, 255, .96);
+  border: 1px solid #dce5ef;
+  box-shadow: 0 12px 30px rgba(24, 49, 83, .09);
+}
+
+.product {
+  overflow: hidden;
+  border-radius: 15px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.product:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 17px 36px rgba(24, 49, 83, .14);
+}
+
+.product img { width: 100%; height: 175px; object-fit: cover; }
+.product .info { padding: 1rem; }
+.product h3 { margin: 0 0 .45rem; }
+.product p { min-height: 3rem; color: #55657a; }
+.price { margin: .9rem 0; font-size: 1.15rem; font-weight: 750; }
+
+.cart-table {
+  width: 100%;
+  overflow: hidden;
+  border-collapse: collapse;
+  border-radius: 12px;
+}
+
+.cart-table th,
+.cart-table td { padding: .85rem; border-bottom: 1px solid #e8eef5; text-align: left; }
+.cart-table th { background: #edf3f9; }
+.total { margin: 1rem 0; font-size: 1.2rem; font-weight: 750; text-align: right; }
+
+.auth-container {
+  max-width: 480px;
+  margin: 1rem auto;
+  padding: 1.5rem;
+  border-radius: 15px;
+}
+
+.auth-container form { display: grid; gap: .7rem; }
+.auth-container label { font-weight: 650; }
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  border: 1px solid #bdcadd;
+  border-radius: 8px;
+  padding: .7rem .8rem;
+  font: inherit;
+}
+
+input:focus {
+  outline: 3px solid rgba(25, 103, 210, .18);
+  border-color: #1967d2;
+}
+
+.options { display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+.options label { font-weight: 400; }
+.password-requirements { color: #5b6879; font-size: .92rem; }
+.message { margin-bottom: 1rem; padding: .8rem 1rem; border-radius: 9px; background: #fff2d7; color: #6f4600; }
+.message p { margin: 0; }
+.inline-form { display: inline; }
+
+@media (max-width: 720px) {
+  header .container { align-items: flex-start; flex-direction: column; padding: 1rem 0; }
+  .main-nav { flex-wrap: wrap; }
+  .cart-table { display: block; overflow-x: auto; }
+  .options { align-items: flex-start; flex-direction: column; }
+}
